@@ -2,7 +2,9 @@
 package controllers;
 import db.DBHelper;
 import db.Seeds;
+import models.Department;
 import models.Employee;
+import models.Manager;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 import static spark.SparkBase.staticFileLocation;
 
 public class EmployeesController {
@@ -18,6 +21,7 @@ public class EmployeesController {
         staticFileLocation("public"); //links to style sheet
         ManagersController managersController = new ManagersController();
         EngineersController engineersController = new EngineersController();
+        DepartmentController departmentController = new DepartmentController();
         Seeds.seedData();  // means now dont have to keep running the runner first before controller
 
         get("/employees", (req, res)-> {
@@ -27,5 +31,7 @@ public class EmployeesController {
             model.put("employees", employees); //key and value
             return new ModelAndView(model, "templates/layout.vtl");
         }, new VelocityTemplateEngine());
-    }
+
+
+}
 }

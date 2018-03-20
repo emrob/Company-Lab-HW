@@ -28,25 +28,21 @@ public class DepartmentController {
             return new ModelAndView(model, "templates/layout.vtl");
         }, new VelocityTemplateEngine());
 
-//        get("/departments/new", (req, res)-> {
-//            Map<String, Object> model = new HashMap<>();
-//            List<Department> departments = DBHelper.getAll(Department.class);
-//            model.put("template", "templates/engineers/create.vtl");
-//            model.put("departments", departments);
-//            return new ModelAndView(model, "templates/layout.vtl");
-//        }, new VelocityTemplateEngine());
-//
-//        post("/engineers", (req, res)-> {
-//            int departmentId = Integer.parseInt(req.queryParams("department"));
-//            Department department = DBHelper.find(departmentId, Department.class);
-//            String firstName = req.queryParams("firstName");
-//            String lastName = req.queryParams("lastName");
-//            int salary = Integer.parseInt(req.queryParams("salary"));
-//            Engineer engineer = new Engineer(firstName, lastName, salary, department);
-//            DBHelper.save(engineer);
-//            res.redirect("/engineers");
-//            return null;
-//        }, new VelocityTemplateEngine());
+        get("/departments/new", (req, res)-> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("template", "templates/departments/create.vtl");
+            return new ModelAndView(model, "templates/layout.vtl");
+        }, new VelocityTemplateEngine());
+
+        post("/departments", (req, res)-> {
+            String title = req.queryParams("title");
+
+            Department department = new Department(title);
+
+            DBHelper.save(department);
+            res.redirect("/departments");
+            return null;
+        }, new VelocityTemplateEngine());
 
     }
 }

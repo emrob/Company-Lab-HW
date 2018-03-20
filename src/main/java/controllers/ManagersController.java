@@ -50,5 +50,16 @@ public class ManagersController {
             res.redirect("/managers");
             return null;
         }, new VelocityTemplateEngine());
+
+        get("/managers/edit/$manager_id", (req, res)-> {
+            Integer id = Integer.parseInt(req.params(":manager_id"));
+            Map<String, Object> model = new HashMap<>();
+            List<Department> departments = DBHelper.getAll(Department.class);
+            model.put("template", "templates/managers/edit.vtl");
+            model.put("departments", departments);
+            return new ModelAndView(model, "templates/layout.vtl");
+        }, new VelocityTemplateEngine());
+
+
     }
 }
